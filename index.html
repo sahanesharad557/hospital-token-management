@@ -1,0 +1,216 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Token Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+    <div class="brand">
+        <div class="logo">✚</div>
+        <div>
+            <h1>CarePoint Hospital</h1>
+            <p>Patient Token Management System</p>
+        </div>
+    </div>
+    <span class="system-status">● Queue System Active</span>
+</header>
+
+<main class="container">
+
+    <section class="welcome">
+        <div>
+            <p class="eyebrow">HOSPITAL ADMINISTRATION</p>
+            <h2>Patient Queue Dashboard</h2>
+            <p>Manage patient tokens quickly and efficiently.</p>
+        </div>
+        <div class="date-box" id="currentDate"></div>
+    </section>
+
+    <section class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon blue">♙</div>
+            <div>
+                <p>Waiting Patients</p>
+                <h3 id="waitingCount">0</h3>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon green">✓</div>
+            <div>
+                <p>Completed Tokens</p>
+                <h3 id="completedCount">0</h3>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon purple">▣</div>
+            <div>
+                <p>Current Token</p>
+                <h3 id="currentToken">---</h3>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon orange">↻</div>
+            <div>
+                <p>Queue Capacity</p>
+                <h3 id="capacityCount">0 / 10</h3>
+            </div>
+        </div>
+    </section>
+
+    <section class="main-grid">
+
+        <div class="panel">
+            <div class="panel-heading">
+                <div>
+                    <h3>Generate New Token</h3>
+                    <p>Enter patient details below.</p>
+                </div>
+                <div class="heading-icon">＋</div>
+            </div>
+
+            <form id="patientForm">
+                <div class="form-group">
+                    <label for="patientName">Patient Name *</label>
+                    <input
+                        type="text"
+                        id="patientName"
+                        placeholder="Enter patient name"
+                        maxlength="60"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="patientAge">Patient Age *</label>
+                    <input
+                        type="number"
+                        id="patientAge"
+                        placeholder="Enter age"
+                        min="0"
+                        max="120"
+                        step="1"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="department">Department *</label>
+                    <select id="department" required>
+                        <option value="">Select department</option>
+                        <option>General Medicine</option>
+                        <option>Cardiology</option>
+                        <option>Orthopedics</option>
+                        <option>Pediatrics</option>
+                        <option>Dental</option>
+                        <option>Dermatology</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary full-width">
+                    + Generate Token
+                </button>
+            </form>
+
+            <div id="tokenResult" class="token-result hidden"
+                 aria-live="polite"></div>
+
+            <div class="queue-info">
+                <span>ⓘ</span>
+                <p>Circular Queue is used to manage up to 10 waiting patients.</p>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-heading">
+                <div>
+                    <h3>Now Serving</h3>
+                    <p>Currently attending patient</p>
+                </div>
+                <span class="live-badge">● LIVE</span>
+            </div>
+
+            <div id="servingDetails" class="serving-details">
+                <div class="empty-avatar">♙</div>
+                <h3>No Patient Selected</h3>
+                <p>Click Next Patient to call the next token.</p>
+            </div>
+
+            <div class="serving-actions">
+                <button type="button" id="nextBtn" class="btn btn-primary">
+                    Next Patient →
+                </button>
+
+                <button type="button" id="completeBtn"
+                        class="btn btn-success" disabled>
+                    ✓ Complete Token
+                </button>
+            </div>
+
+            <p class="action-note">
+                Complete the current token before calling another patient.
+            </p>
+        </div>
+
+    </section>
+
+    <section class="panel queue-panel">
+        <div class="panel-heading queue-heading">
+            <div>
+                <h3>Patient Waiting Queue</h3>
+                <p>Patients are served in FIFO order.</p>
+            </div>
+
+            <button type="button" id="resetBtn"
+                    class="btn btn-danger-outline">
+                ↻ Reset Queue
+            </button>
+        </div>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Token</th>
+                        <th>Patient Name</th>
+                        <th>Age</th>
+                        <th>Department</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody id="queueBody">
+                    <tr>
+                        <td colspan="5" class="empty-row">
+                            No patients in the queue.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="queue-footer">
+            <span id="queueSummary">Showing 0 waiting patients</span>
+            <span class="fifo-label">FIFO · Circular Queue</span>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 CarePoint Hospital · Academic Project</p>
+        <p>Data Structures and Algorithms · Unit II · CO2</p>
+    </footer>
+
+</main>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
